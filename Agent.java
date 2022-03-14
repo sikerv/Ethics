@@ -70,8 +70,35 @@ public class Agent extends SupermarketComponentImpl {
 	// this is called every 100ms
 	// put your code in here
 	Observation obs = getLastObservation();
-	
-	
+		
+		// Vaughan: method for getting the location of a shelf
+	    	// can create another for loop which circulates through our custom array like Vincent suggested and stores locations
+	    	// alternatively, can just use this to get the location on a constant basis as we cycle thru shopping list which is probably easier
+	   	double targetx;
+		double targety;
+		Observation.Shelf target;
+	    	for (int i = 0; i < obs.shelves.length; i++){
+			if (obs.shelves[i].food.equals(goalLocation)){
+				targetx = obs.shelves[i].position[0];
+				targety = obs.shelves[i].position[1];
+				target = obs.shelves[i];
+			}
+		}
+	    	// Vaughan: method for figuring out collision range if we need to
+	    	double targetcollideN = targety + (target.height / 2) + 1;
+		double targetcollideS = targety - (target.height / 2) - 1;
+		double targetcollideE = targetx - (target.width / 2) - .5;
+		double targetcollideW = targetx + (target.width / 2) + .5;
+	    
+	    	// Vaughan: same for registers
+// 	    	Observation.Register targetC = ob.registers[0];
+// 	    	targetx = targetC.position[0];
+// 		targety = targetC.position[1];
+// 		double targetCCollideN = targety + .5;
+// 		double targetCCollideS = targety - .5;
+// 		double targetCCollideE = targetx + (targetC.width / 2) + .5;
+// 		double targetCCollideW = targetx - (targetC.width / 2) - .5;
+	    
 	get_goalLocation(shopping_list, curr_item);
 	aisle = goalLocation[0];
 	boolean atAisle = (!obs.belowAisle(0, aisle) && !obs.aboveAisle(0, aisle));
